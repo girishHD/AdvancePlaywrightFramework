@@ -1,0 +1,20 @@
+2026-08-16 20:28:27 [info] [login.spec] Opening the TTACart login Page
+2026-08-16 20:28:27 [info] [LoginPage] Open login pgae
+2026-08-16 20:28:41 [info] [login.spec] Logging in as standard_user
+2026-08-16 20:28:41 [info] [LoginPage] loginAs standard_user
+2026-08-16 20:28:41 [info] [login.spec] Asserting login form is hidden after login
+2026-08-16 20:34:33 [info] [login.spec] Opening the TTACart login Page
+2026-08-16 20:34:33 [info] [LoginPage] Open login pgae
+2026-08-16 20:34:38 [info] [login.spec] Logging in as standard_user
+2026-08-16 20:34:38 [info] [LoginPage] loginAs standard_user
+2026-08-16 20:34:38 [info] [login.spec] Asserting login form is hidden after login
+2026-08-16 20:36:05 [info] [login.spec] Opening the TTACart login Page
+2026-08-16 20:36:05 [info] [LoginPage] Open login pgae
+2026-08-16 20:36:10 [info] [login.spec] Logging in as standard_user
+2026-08-16 20:36:10 [info] [LoginPage] loginAs standard_user
+2026-08-16 20:36:10 [info] [login.spec] Asserting login form is hidden after login
+2026-08-16 20:37:46 [info] [login.spec] Opening the TTACart login Page
+2026-08-16 20:37:46 [info] [LoginPage] Open login pgae
+2026-08-16 20:37:48 [info] [login.spec] Logging in as standard_user
+2026-08-16 20:37:48 [info] [LoginPage] loginAs standard_user
+2026-08-16 20:37:49 [info] [login.spec] Asserting login form is hidden after login
