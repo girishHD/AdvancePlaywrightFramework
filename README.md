@@ -50,7 +50,7 @@ AdvancePlaywrightFramework/
 │   ├── tests/                  # Test specifications (testDir)
 │   │   └── Login.spec.ts       # Login test suite
 │   └── utils/                  # Utilities
-│       ├── CustomrReporter.ts  # Custom TTA HTML reporter
+│       ├── CustomReporter.ts   # Custom TTA HTML reporter
 │       ├── DataGenerator.ts    # Faker-based test data generator
 │       ├── UtilElementLocator.ts # Element interaction utilities
 │       └── logger.ts           # Winston logging setup
@@ -127,10 +127,10 @@ open tta-report/history.html
 | Fully Parallel | `true` |
 | Retries (CI) | 2 |
 | Retries (Local) | 0 |
-| Reporters | Custom TTA + List |
+| Reporters | HTML + List + Custom TTA |
 | Screenshots | On failure only |
 | Video | Always on |
-| Trace | On first retry |
+| Trace | Always on |
 | Browser | Chromium (Desktop Chrome) |
 
 ### Environments
@@ -181,6 +181,7 @@ OPENAI_API_KEY=your-api-key
 | `@playwright/test` | Core test runner and browser automation |
 | `@faker-js/faker` | Realistic fake data generation |
 | `ajv` + `ajv-formats` | JSON Schema validation for API responses |
+| `allure-playwright` | Allure report integration |
 | `csv-parse` | CSV file parsing for data-driven tests |
 | `dotenv` | Environment variable management |
 | `jsonpath-plus` | JSONPath querying for API responses |
