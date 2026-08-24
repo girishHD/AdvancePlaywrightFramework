@@ -29,6 +29,7 @@ function resolveBaseURL(): string {
 
 export default defineConfig({
   testDir: './src/tests',
+  tsconfig: './tsconfig.json',
 
   timeout: 60_000,
 
@@ -43,12 +44,12 @@ export default defineConfig({
   reporter: [
     ['html'],
     ['list'],
-    ['./src/utils/CustomrReporter.ts']
+    ['./src/utils/CustomReporter.ts'],
   ],
 
   use: {
     baseURL: resolveBaseURL(),
-    screenshot: 'on',
+    screenshot: 'only-on-failure',
     video: 'on',
     trace: 'on'
   },

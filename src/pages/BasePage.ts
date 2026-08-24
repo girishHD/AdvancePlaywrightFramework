@@ -12,8 +12,8 @@
  */
 
 import { Page } from '@playwright/test';
-import { UtilElementLocator } from '../utils/UtilElementLocator';
-import { createLogger, type Logger } from '../utils/logger';
+import { UtilElementLocator } from '@utils/UtilElementLocator';
+import { createLogger, type Logger } from '@utils/logger';
 
 export abstract class BasePage {
     protected readonly page: Page;

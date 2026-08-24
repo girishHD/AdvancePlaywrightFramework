@@ -48,15 +48,16 @@ AdvancePlaywrightFramework/
 │   │   └── CheckoutCompletePage.ts # Order confirmation page
 │   ├── testdata/               # Test data files (JSON, CSV, Excel)
 │   ├── tests/                  # Test specifications (testDir)
-│   │   └── Login.spec.ts       # Login test suite
+│   │   └── login/
+│   │       └── Login.spec.ts   # Login test suite
 │   └── utils/                  # Utilities
 │       ├── CustomReporter.ts   # Custom TTA HTML reporter
 │       ├── DataGenerator.ts    # Faker-based test data generator
 │       ├── UtilElementLocator.ts # Element interaction utilities
 │       └── logger.ts           # Winston logging setup
-├── tta-report/                 # Generated HTML reports
-├── reports/                    # Build snapshots for flaky analysis
-├── logs/                       # Application logs
+├── tta-report/                 # Generated HTML reports (gitignored)
+├── reports/                    # Build snapshots for flaky analysis (gitignored)
+├── logs/                       # Application logs (gitignored)
 ├── playwright.config.ts        # Playwright configuration
 ├── tsconfig.json               # TypeScript configuration
 └── package.json                # Dependencies & scripts

@@ -7,5 +7,10 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
+# Reports & Logs
+tta-report/
+reports/
+logs/
+
 # Environment
 .env
