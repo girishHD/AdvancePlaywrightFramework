@@ -78,7 +78,7 @@ export class DataGenerator {
     // ---------- composites ----------
 
     /** Customer info for the TTACart checkout step-one form. */
-    static checckoutCustomer(): CheckoutCustomer {
+    static checkoutCustomer(): CheckoutCustomer {
         return {
             firstName: DataGenerator.firstName(),
             lastName: DataGenerator.lastName(),

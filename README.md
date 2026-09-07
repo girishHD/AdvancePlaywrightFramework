@@ -6,9 +6,11 @@ A comprehensive, enterprise-grade **Playwright Test Automation Framework** built
 
 - **TypeScript-first** — Strict mode with full type safety
 - **Page Object Model (POM)** — Maintainable web element abstractions with BasePage inheritance
-- **Custom Playwright Fixtures** — Extended test capabilities with dependency injection
+- **Custom Playwright Fixtures** — `test-base` injects pre-built Page Objects (and the test data) into specs
 - **Multi-Environment Support** — Dev, QA, Staging, Production, and API environments
+- **Visual Test Steps** — `visualStep` captures step-level screenshots for the TTA report (opt-in)
 - **Data-Driven Testing** — Read test data from CSV, Excel, and JSON files
+- **Externalized Credentials** — Usernames/secrets resolved from env vars via `credentials` config
 - **API Testing** — REST API validation with JSON Schema (AJV)
 - **Custom HTML Reporting** — Rich, interactive TTA reports with steps, screenshots, videos, and traces
 - **AI-Powered Analysis** — Root cause analysis (RCA) agent for failed tests and flaky test detection
@@ -36,7 +38,10 @@ AdvancePlaywrightFramework/
 │   │   └── config/             # LLM provider configuration
 │   ├── api/                    # API testing helpers & clients
 │   ├── config/                 # Configuration management
+│   │   ├── credentials.ts      # Usernames/secrets from env vars
+│   │   └── framework.config.ts # Framework flags (e.g. ATTACH_SCREENSHOTS)
 │   ├── fixtures/               # Custom Playwright fixtures
+│   │   └── test-base.ts        # `test` pre-wired with POM page-object fixtures
 │   ├── pages/                  # Page Object Model classes
 │   │   ├── BasePage.ts         # Base page with common utilities
 │   │   ├── LoginPage.ts        # Login page objects
@@ -47,13 +52,18 @@ AdvancePlaywrightFramework/
 │   │   ├── CheckoutStepTwoPage.ts  # Checkout overview page
 │   │   └── CheckoutCompletePage.ts # Order confirmation page
 │   ├── testdata/               # Test data files (JSON, CSV, Excel)
+│   │   ├── checkout-users.json     # Demo users (standard/problem/glitch, etc.)
+│   │   └── checkout-customers.json # Guest customer profiles
 │   ├── tests/                  # Test specifications (testDir)
+│   │   ├── e2e/                # End-to-end flows (checkout, etc.)
+│   │   │   └── e2e-checkout.spec.ts  # Full checkout journey (POM fixtures)
 │   │   └── login/
 │   │       └── Login.spec.ts   # Login test suite
 │   └── utils/                  # Utilities
 │       ├── CustomReporter.ts   # Custom TTA HTML reporter
 │       ├── DataGenerator.ts    # Faker-based test data generator
 │       ├── UtilElementLocator.ts # Element interaction utilities
+│       ├── visualStep.ts       # test.step wrapper + step screenshots
 │       └── logger.ts           # Winston logging setup
 ├── tta-report/                 # Generated HTML reports (gitignored)
 ├── reports/                    # Build snapshots for flaky analysis (gitignored)
@@ -129,7 +139,7 @@ open tta-report/history.html
 | Retries (CI) | 2 |
 | Retries (Local) | 0 |
 | Reporters | HTML + List + Custom TTA |
-| Screenshots | On failure only |
+| Screenshots | Off, or on-failure when `ATTACH_SCREENSHOTS=true` |
 | Video | Always on |
 | Trace | Always on |
 | Browser | Chromium (Desktop Chrome) |
@@ -150,11 +160,38 @@ open tta-report/history.html
 |---|---|
 | `TTA_ENV` | Active environment (qa/dev/stg/prod) |
 | `BASE_URL` | Override base URL |
+| `QA_BASE_URL` / `DEV_BASE_URL` / `STG_BASE_URL` / `PROD_BASE_URL` / `API_BASE_URL` | Per-environment base URL overrides |
 | `LOG_LEVEL` | Logging verbosity (info/debug/error) |
-| `USERNAME` | Application login username |
-| `PASSWORD` | Application login password |
+| `STANDARD_USER` | Standard login username (used by `credentials`) |
+| `TTA_SECRET` | Standard login password (used by `credentials`) |
+| `ATTACH_SCREENSHOTS` | `true` to attach step screenshots to the TTA report |
 | `TEST_ENV` | Test environment label for reports |
 | `TEST_AUTHOR` | Test author name for reports |
+
+## Custom Fixtures & Visual Steps
+
+The shared `test` in `src/fixtures/test-base.ts` extends Playwright's `test` with one
+fixture per Page Object, so specs can request pre-built pages without `new`-ing them up:
+
+```ts
+import { test, expect } from '@fixtures/test-base';
+
+test('add to cart', async ({ inventoryPage, cartPage }) => {
+    await inventoryPage.open();
+    await inventoryPage.addToCart('tta-bike-light');
+    await cartPage.open();
+    expect(await cartPage.rowCount()).toBe(1);
+});
+```
+
+When `ATTACH_SCREENSHOTS=true`, wrap steps in `visualStep` (from `src/utils/visualStep.ts`)
+to also attach a screenshot of that step to the TTA report:
+
+```ts
+await visualStep(page, 'Open the cart', async () => {
+    await cartPage.open();
+});
+```
 
 ## AI-Powered Features
 

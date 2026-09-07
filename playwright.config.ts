@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
+import { frameworkConfig } from './src/config/framework.config';
 
 dotenv.config();
 
@@ -49,7 +50,8 @@ export default defineConfig({
 
   use: {
     baseURL: resolveBaseURL(),
-    screenshot: 'only-on-failure',
+    headless: false,
+    screenshot: frameworkConfig.attachScreenshots ? 'only-on-failure' : 'off',
     video: 'on',
     trace: 'on'
   },

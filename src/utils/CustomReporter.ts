@@ -20,6 +20,7 @@ import * as path from 'path';
 import { analyzeFailure, type RcaVerdict } from '../ai/agents/rcaAgent';
 import { analyzeFlaky, type BuildSummary, type FlakyResult } from '../ai/agents/flakyAnalyzer';
 import { hasApiKey } from '../ai/config/providers';
+import { frameworkConfig } from '../config/framework.config';
 
 export interface StepData {
     title: string;
@@ -248,7 +249,7 @@ class CustomTTAReporter implements Reporter {
         let tracePath: string | undefined;
 
         for (const attachment of result.attachments) {
-            if (attachment.contentType === 'image/png') {
+            if (frameworkConfig.attachScreenshots && attachment.contentType === 'image/png') {
                 const screenshotName = `screenshot_${this.testCounter}_${screenshots.length + 1}.png`;
                 const destPath = path.join('tta-report', 'screenshots', screenshotName);
                 const destDir = path.dirname(destPath);
@@ -318,28 +319,30 @@ class CustomTTAReporter implements Reporter {
         }
 
         // Associate screenshots with steps
-        for (const step of currentTestSteps) {
-            for (const [name, screenshotPath] of stepScreenshots) {
-                const nameLower = name.toLowerCase();
-                const titleLower = step.title.toLowerCase();
+        if (frameworkConfig.attachScreenshots) {
+            for (const step of currentTestSteps) {
+                for (const [name, screenshotPath] of stepScreenshots) {
+                    const nameLower = name.toLowerCase();
+                    const titleLower = step.title.toLowerCase();
 
-                const stepIndexPattern = `step-${step.stepIndex}-`;
-                if (nameLower.startsWith(stepIndexPattern)) {
-                    step.screenshot = screenshotPath;
-                    break;
-                }
+                    const stepIndexPattern = `step-${step.stepIndex}-`;
+                    if (nameLower.startsWith(stepIndexPattern)) {
+                        step.screenshot = screenshotPath;
+                        break;
+                    }
 
-                const stepNumPattern1 = `step_${(step.stepIndex || 0) + 1}_`;
-                const stepNumPattern2 = `step ${(step.stepIndex || 0) + 1}`;
-                if (nameLower.includes(stepNumPattern1) || nameLower.includes(stepNumPattern2)) {
-                    step.screenshot = screenshotPath;
-                    break;
-                }
+                    const stepNumPattern1 = `step_${(step.stepIndex || 0) + 1}_`;
+                    const stepNumPattern2 = `step ${(step.stepIndex || 0) + 1}`;
+                    if (nameLower.includes(stepNumPattern1) || nameLower.includes(stepNumPattern2)) {
+                        step.screenshot = screenshotPath;
+                        break;
+                    }
 
-                const cleanedName = nameLower.replace(/step[-_]?\d+[-_:]?/i, '').trim();
-                if (cleanedName && (titleLower.includes(cleanedName) || cleanedName.includes(titleLower.substring(0, 20)))) {
-                    step.screenshot = screenshotPath;
-                    break;
+                    const cleanedName = nameLower.replace(/step[-_]?\d+[-_:]?/i, '').trim();
+                    if (cleanedName && (titleLower.includes(cleanedName) || cleanedName.includes(titleLower.substring(0, 20)))) {
+                        step.screenshot = screenshotPath;
+                        break;
+                    }
                 }
             }
         }

@@ -1,0 +1,41 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "12345",
+    "description": "Valid customer - all fields filled",
+    "isValid": true
+  },
+  {
+    "firstName": "",
+    "lastName": "Doe",
+    "postalCode": "12345",
+    "description": "Invalid - missing firstName",
+    "isValid": false,
+    "expectedError": "First Name is required"
+  },
+  {
+    "firstName": "John",
+    "lastName": "",
+    "postalCode": "12345",
+    "description": "Invalid - missing lastName",
+    "isValid": false,
+    "expectedError": "Last Name is required"
+  },
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "",
+    "description": "Invalid - missing postalCode",
+    "isValid": false,
+    "expectedError": "Postal Code is required"
+  },
+  {
+    "firstName": "",
+    "lastName": "",
+    "postalCode": "",
+    "description": "Invalid - all fields empty",
+    "isValid": false,
+    "expectedError": "First Name is required"
+  }
+]

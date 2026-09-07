@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(git fetch origin 2>&1; echo \"---STATUS---\"; git status -sb; echo \"---LOG---\"; git log --oneline -5)",
+      "Shell(git:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

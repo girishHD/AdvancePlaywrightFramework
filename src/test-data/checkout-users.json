@@ -1,0 +1,27 @@
+[
+  {
+    "username": "standard_user",
+    "password": "tta_secret",
+    "description": "Standard user with full access"
+  },
+  {
+    "username": "problem_user",
+    "password": "tta_secret",
+    "description": "User with UI issues"
+  },
+  {
+    "username": "performance_glitch_user",
+    "password": "tta_secret",
+    "description": "User with performance issues"
+  },
+  {
+    "username": "error_user",
+    "password": "tta_secret",
+    "description": "User that encounters errors"
+  },
+  {
+    "username": "visual_user",
+    "password": "tta_secret",
+    "description": "User with visual differences"
+  }
+]
